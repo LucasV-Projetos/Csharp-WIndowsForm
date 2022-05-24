@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Conexao.cs" />
+    <Compile Include="Classes\Crypto.cs" />
     <Compile Include="Classes\Login.cs" />
+    <Compile Include="Classes\Pessoa.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Telas\frmLogin.cs">

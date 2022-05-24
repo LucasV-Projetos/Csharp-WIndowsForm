@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _06_CRUD.Classes
 {
-    class Login
+    public class Login
     {
         #region "Variáveis"
 
@@ -156,11 +156,50 @@ namespace _06_CRUD.Classes
                 cn.comando = new SqlCommand(cn.query, cn.conexao);
                 cn.AbreConexao();
                 cn.dr = cn.comando.ExecuteReader();
+                if (cn.dr.HasRows)
+                {
+                    Login usuarioLogado = new Login();
+                    while (cn.dr.Read())
+                    {
+                        usuarioLogado = new Login(Convert.ToInt32(cn.dr["id_usuario"]), 
+                            cn.dr["nome"].ToString(),
+                            cn.dr["email"].ToString(),
+                            cn.dr["login"].ToString(),
+                            cn.dr["senha"].ToString(),
+                            cn.dr["frase_seguranca"].ToString(),
+                            Convert.ToInt32(cn.dr["nivel"]),
+                            Convert.ToInt32(cn.dr["ativo"]));
+                    }
+                    if (usuarioLogado.Ativo == 1)
+                    {
+                        if (usuarioLogado.Senha == senha)
+                        {
+                            frmPrincipal TP = new frmPrincipal(usuarioLogado);
+                            TP.ShowDialog();
+                        }
+                        else
+                        {
+                            throw new Exception("Senha inválida");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Usuário bloqueado!");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Usuário não encontrado!");
+                }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                cn.FechaConexao();
             }
         }
 
