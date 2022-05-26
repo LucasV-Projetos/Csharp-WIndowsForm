@@ -10,14 +10,14 @@ namespace _06_CRUD.Classes
 {
     class Conexao
     {
-        #region
-        private static string _servidor = @"VPR0576608W10-1";
+        #region "Variáveis"
+        private static string _servidor = @"VPR0576608W10-1"; //IP do banco de dados0
         private static string _baseDeDados = "pessoas";
         private static string _usuario = "sa";
         private static string _senha = "123456";
 
         //Linha de conexão para o SQL Server com usuário e senha
-        //private static string _StrConexao = "Data Source=" + _servidor +";Initial Catalog=" +_baseDeDados + ";User ID=" + _usuario + ";Password=" + _senha
+        //private static string _strConexao = "Data Source=" + _servidor +";Initial Catalog=" +_baseDeDados + ";User ID=" + _usuario + ";Password=" + _senha
 
 
         //Linha de conexão para o SQL Server com autentcação do Windows

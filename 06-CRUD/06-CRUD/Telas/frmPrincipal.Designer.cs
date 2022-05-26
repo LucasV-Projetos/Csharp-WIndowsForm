@@ -29,6 +29,7 @@ namespace _06_CRUD
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSalvar = new System.Windows.Forms.ToolStripButton();
             this.toolStripAlterar = new System.Windows.Forms.ToolStripButton();
@@ -37,7 +38,7 @@ namespace _06_CRUD
             this.toolStri = new System.Windows.Forms.ToolStripButton();
             this.toolStripCancelar = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSair = new System.Windows.Forms.ToolStripButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnFoto = new System.Windows.Forms.Button();
             this.txbFoto = new System.Windows.Forms.TextBox();
@@ -46,7 +47,7 @@ namespace _06_CRUD
             this.label5 = new System.Windows.Forms.Label();
             this.cbbSexo = new System.Windows.Forms.ComboBox();
             this.dtpNascimento = new System.Windows.Forms.DateTimePicker();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.mskFone = new System.Windows.Forms.MaskedTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txbEmail = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -80,7 +81,7 @@ namespace _06_CRUD
             this.toolStri,
             this.toolStripCancelar,
             this.toolStripButton2,
-            this.toolStripButton1});
+            this.toolStripSair});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(933, 38);
@@ -95,15 +96,18 @@ namespace _06_CRUD
             this.toolStripSalvar.Size = new System.Drawing.Size(42, 35);
             this.toolStripSalvar.Text = "Salvar";
             this.toolStripSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripSalvar.Click += new System.EventHandler(this.toolStripSalvar_Click);
             // 
             // toolStripAlterar
             // 
+            this.toolStripAlterar.Enabled = false;
             this.toolStripAlterar.Image = global::_06_CRUD.Properties.Resources.update_64;
             this.toolStripAlterar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripAlterar.Name = "toolStripAlterar";
             this.toolStripAlterar.Size = new System.Drawing.Size(46, 35);
             this.toolStripAlterar.Text = "Alterar";
             this.toolStripAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripAlterar.Click += new System.EventHandler(this.toolStripAlterar_Click);
             // 
             // toolStripMudaFoto
             // 
@@ -114,15 +118,18 @@ namespace _06_CRUD
             this.toolStripMudaFoto.Text = "Mudar Foto";
             this.toolStripMudaFoto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMudaFoto.Visible = false;
+            this.toolStripMudaFoto.Click += new System.EventHandler(this.toolStripMudaFoto_Click);
             // 
             // toolStripExcluir
             // 
+            this.toolStripExcluir.Enabled = false;
             this.toolStripExcluir.Image = global::_06_CRUD.Properties.Resources.delete_64;
             this.toolStripExcluir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripExcluir.Name = "toolStripExcluir";
             this.toolStripExcluir.Size = new System.Drawing.Size(46, 35);
             this.toolStripExcluir.Text = "Excluir";
             this.toolStripExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripExcluir.Click += new System.EventHandler(this.toolStripExcluir_Click);
             // 
             // toolStri
             // 
@@ -142,6 +149,7 @@ namespace _06_CRUD
             this.toolStripCancelar.Text = "Cancelar";
             this.toolStripCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripCancelar.Visible = false;
+            this.toolStripCancelar.Click += new System.EventHandler(this.toolStripCancelar_Click);
             // 
             // toolStripButton2
             // 
@@ -152,14 +160,15 @@ namespace _06_CRUD
             this.toolStripButton2.Text = "Alterar Senha";
             this.toolStripButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // toolStripButton1
+            // toolStripSair
             // 
-            this.toolStripButton1.Image = global::_06_CRUD.Properties.Resources.exit_64;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(30, 35);
-            this.toolStripButton1.Text = "Sair";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripSair.Image = global::_06_CRUD.Properties.Resources.exit_64;
+            this.toolStripSair.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSair.Name = "toolStripSair";
+            this.toolStripSair.Size = new System.Drawing.Size(30, 35);
+            this.toolStripSair.Text = "Sair";
+            this.toolStripSair.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripSair.Click += new System.EventHandler(this.toolStripSair_Click);
             // 
             // groupBox1
             // 
@@ -170,7 +179,7 @@ namespace _06_CRUD
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.cbbSexo);
             this.groupBox1.Controls.Add(this.dtpNascimento);
-            this.groupBox1.Controls.Add(this.maskedTextBox1);
+            this.groupBox1.Controls.Add(this.mskFone);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.txbEmail);
             this.groupBox1.Controls.Add(this.label3);
@@ -193,9 +202,11 @@ namespace _06_CRUD
             this.btnFoto.Size = new System.Drawing.Size(44, 30);
             this.btnFoto.TabIndex = 13;
             this.btnFoto.UseVisualStyleBackColor = true;
+            this.btnFoto.Click += new System.EventHandler(this.btnFoto_Click);
             // 
             // txbFoto
             // 
+            this.txbFoto.Enabled = false;
             this.txbFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbFoto.Location = new System.Drawing.Point(9, 295);
             this.txbFoto.Name = "txbFoto";
@@ -251,14 +262,14 @@ namespace _06_CRUD
             this.dtpNascimento.Size = new System.Drawing.Size(126, 30);
             this.dtpNascimento.TabIndex = 8;
             // 
-            // maskedTextBox1
+            // mskFone
             // 
-            this.maskedTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maskedTextBox1.Location = new System.Drawing.Point(9, 232);
-            this.maskedTextBox1.Mask = "(00) 00000-0000";
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(154, 30);
-            this.maskedTextBox1.TabIndex = 7;
+            this.mskFone.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mskFone.Location = new System.Drawing.Point(9, 232);
+            this.mskFone.Mask = "(00) 00000-0000";
+            this.mskFone.Name = "mskFone";
+            this.mskFone.Size = new System.Drawing.Size(154, 30);
+            this.mskFone.TabIndex = 7;
             // 
             // label4
             // 
@@ -341,13 +352,15 @@ namespace _06_CRUD
             this.btnBusca.TabIndex = 16;
             this.btnBusca.Text = "Busca";
             this.btnBusca.UseVisualStyleBackColor = true;
+            this.btnBusca.Click += new System.EventHandler(this.btnBusca_Click);
             // 
             // txbBusca
             // 
+            this.txbBusca.Enabled = false;
             this.txbBusca.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbBusca.Location = new System.Drawing.Point(6, 67);
             this.txbBusca.Name = "txbBusca";
-            this.txbBusca.Size = new System.Drawing.Size(121, 26);
+            this.txbBusca.Size = new System.Drawing.Size(381, 26);
             this.txbBusca.TabIndex = 15;
             // 
             // cbbBusca
@@ -361,22 +374,32 @@ namespace _06_CRUD
             "Nome",
             "Email",
             "Fone",
-            "Ativo"});
+            "Ativo",
+            "Desativado"});
             this.cbbBusca.Location = new System.Drawing.Point(6, 25);
             this.cbbBusca.Name = "cbbBusca";
-            this.cbbBusca.Size = new System.Drawing.Size(121, 28);
+            this.cbbBusca.Size = new System.Drawing.Size(381, 28);
             this.cbbBusca.TabIndex = 14;
+            this.cbbBusca.DropDownClosed += new System.EventHandler(this.cbbBusca_DropDownClosed);
             // 
             // picFoto
             // 
-            this.picFoto.Location = new System.Drawing.Point(543, 225);
+            this.picFoto.Enabled = false;
+            this.picFoto.Location = new System.Drawing.Point(528, 226);
             this.picFoto.Name = "picFoto";
-            this.picFoto.Size = new System.Drawing.Size(100, 133);
+            this.picFoto.Size = new System.Drawing.Size(393, 213);
+            this.picFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picFoto.TabIndex = 17;
             this.picFoto.TabStop = false;
+            this.picFoto.DoubleClick += new System.EventHandler(this.picFoto_DoubleClick);
             // 
             // dgvBusca
             // 
+            this.dgvBusca.AllowUserToAddRows = false;
+            this.dgvBusca.AllowUserToDeleteRows = false;
+            this.dgvBusca.AllowUserToOrderColumns = true;
+            this.dgvBusca.AllowUserToResizeColumns = false;
+            this.dgvBusca.AllowUserToResizeRows = false;
             this.dgvBusca.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvBusca.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBusca.Location = new System.Drawing.Point(13, 462);
@@ -387,12 +410,13 @@ namespace _06_CRUD
             this.dgvBusca.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvBusca.Size = new System.Drawing.Size(908, 150);
             this.dgvBusca.TabIndex = 18;
+            this.dgvBusca.Click += new System.EventHandler(this.dgvBusca_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 743);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 621);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(933, 22);
             this.statusStrip1.TabIndex = 19;
@@ -408,13 +432,14 @@ namespace _06_CRUD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(933, 765);
+            this.ClientSize = new System.Drawing.Size(933, 643);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dgvBusca);
             this.Controls.Add(this.picFoto);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmPrincipal";
@@ -445,10 +470,10 @@ namespace _06_CRUD
         private System.Windows.Forms.ToolStripButton toolStri;
         private System.Windows.Forms.ToolStripButton toolStripCancelar;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripSair;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dtpNascimento;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.MaskedTextBox mskFone;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txbEmail;
         private System.Windows.Forms.Label label3;

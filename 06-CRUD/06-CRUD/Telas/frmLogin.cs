@@ -42,11 +42,9 @@ namespace _06_CRUD
             {
                 try
                 {
-                    this.Visible = false;
                     string senhaCrypto = Crypto.sha256encrypt(txbSenha.Text);
                     senhaCrypto = senhaCrypto.ToLower();
                     Login.RealizarLogin(txbLogin.Text, senhaCrypto);
-                    this.Visible = true;
                     txbLogin.Clear();
                     txbSenha.Clear();
                     txbLogin.Focus();
@@ -62,23 +60,6 @@ namespace _06_CRUD
         private void btnSair_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            DialogResult Sair = MessageBox.Show("Deseja sair do programa?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (Sair == DialogResult.No)
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void frmLogin_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-
-            }
         }
 
         private void txbSenha_KeyPress(object sender, KeyPressEventArgs e)

@@ -29,6 +29,7 @@ namespace _06_CRUD
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txbLogin = new System.Windows.Forms.TextBox();
@@ -116,13 +117,13 @@ namespace _06_CRUD
             this.Controls.Add(this.txbLogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Acesso ao sistema";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmLogin_KeyPress);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbSenha_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 
