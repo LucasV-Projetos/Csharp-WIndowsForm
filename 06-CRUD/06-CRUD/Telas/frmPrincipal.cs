@@ -10,15 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _06_CRUD
+namespace _06_CRUD.Telas
 {
     public partial class frmPrincipal : Form
     {
         Login usuarioLogado = new Login();
         string nivelUsu = "";
-
-
-
         public frmPrincipal(Login usu)
         {
             InitializeComponent();
@@ -34,17 +31,18 @@ namespace _06_CRUD
             else
             {
                 nivelUsu = "Usuário comum";
+                toolStripUsuarios.Visible = false;
             }
-            toolStripStatus.Text = "Olá " + usuarioLogado.Nome + ", Seu nível de acesso é " + nivelUsu;
-            dgvBusca.DataSource = Pessoa.BuscaTodasPessoas();
-            dgvBusca.Columns[0].HeaderText = "Cógido";
-            dgvBusca.Columns[1].HeaderText = "Nome";
-            dgvBusca.Columns[2].HeaderText = "E-mail";
-            dgvBusca.Columns[3].HeaderText = "Fone";
-            dgvBusca.Columns[4].HeaderText = "Dt Nascimento";
-            dgvBusca.Columns[5].HeaderText = "Sexo";
-            dgvBusca.Columns[6].Visible = false;
-            dgvBusca.Columns[7].Visible = false;
+            toolStripStatus.Text = "Olá " + usuarioLogado.Nome + ", seu nível de acesso é " + nivelUsu;
+            dgvPessoas.DataSource = Pessoa.BuscaTodasPessoas();
+            dgvPessoas.Columns[0].HeaderText = "Código";
+            dgvPessoas.Columns[1].HeaderText = "Nome";
+            dgvPessoas.Columns[2].HeaderText = "E-mail";
+            dgvPessoas.Columns[3].HeaderText = "Fone";
+            dgvPessoas.Columns[4].HeaderText = "Dt Nascimento";
+            dgvPessoas.Columns[5].HeaderText = "Sexo";
+            dgvPessoas.Columns[6].Visible = false;
+            dgvPessoas.Columns[7].Visible = false;
         }
 
         private void toolStripSalvar_Click(object sender, EventArgs e)
@@ -58,54 +56,54 @@ namespace _06_CRUD
                     CopiarArquivo(txbFoto.Text, @Destino + "\\" + Path.GetFileName(txbFoto.Text));
 
                     //Grava os dados no banco de dados
-                    string DataBanco = dtpNascimento.Value.ToString("yyyy-mm-dd");
+                    string DataBanco = dtpNascimento.Value.ToString("yyyy-MM-dd");
                     Pessoa NovaPessoa = new Pessoa(txbNome.Text, txbEmail.Text, mskFone.Text, DataBanco, cbbSexo.SelectedItem.ToString(), Path.GetFileName(txbFoto.Text), 1);
-                    NovaPessoa.CadastraPessoa();
+                    int id = NovaPessoa.CadastraPessoa();
+                    MessageBox.Show("Pessoa inserida com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-                    //Criando o log                    
+                    //Criando o log
                     string arquivoLog = @Destino + @"\log.txt";
                     if (!File.Exists(arquivoLog))
                         File.Create(arquivoLog).Close();
-                    File.AppendAllText(arquivoLog, "Usuário " + usuarioLogado.Nome + " - inseriu o registro em (" + DateTime.Now.ToString() +  ")/r/n");
+                    File.AppendAllText(arquivoLog, "Usuário " + usuarioLogado.Nome + " - inseriu o registro " + id + " em (" + DateTime.Now.ToString() + ")\r\n");
 
-                    //Atualiza o dataGrid
-                    dgvBusca.DataSource = Pessoa.BuscaTodasPessoas();
+                    //Atualiza o datagrid
+                    dgvPessoas.DataSource = Pessoa.BuscaTodasPessoas();
 
-                    //Limpa os textBox
+                    //Limpar os textbox
                     LimpaDados();
-
                 }
                 catch (Exception erro)
                 {
-                    MessageBox.Show("Ocorreu um erro:" + erro, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    MessageBox.Show("Ocorreu um erro: " + erro, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
                 }
             }
         }
 
         private Boolean ValidaDados()
         {
-            if (txbNome.Text == String.Empty)
+            if (txbNome.Text == string.Empty)
             {
                 MessageBox.Show("Campo obrigatório", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txbNome.Focus();
                 return false;
             }
-            if (txbEmail.Text == String.Empty)
+
+            if (txbEmail.Text == string.Empty)
             {
                 MessageBox.Show("Campo obrigatório", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txbEmail.Focus();
                 return false;
             }
 
-            if (mskFone.Text == String.Empty)
+            if (mskFone.Text == string.Empty)
             {
                 MessageBox.Show("Campo obrigatório", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 mskFone.Focus();
                 return false;
             }
-
-
-
 
             if (dtpNascimento.Value == DateTime.Now)
             {
@@ -120,17 +118,19 @@ namespace _06_CRUD
                 cbbSexo.Focus();
                 return false;
             }
+
             return true;
         }
 
         private void LimpaDados()
         {
             txbId.Clear();
+            txbNome.Clear();
             txbEmail.Clear();
-            txbFoto.Clear();
             mskFone.Clear();
             dtpNascimento.Value = DateTime.Now;
             cbbSexo.SelectedIndex = -1;
+            txbFoto.Clear();
             picFoto.Image = null;
             txbNome.Focus();
         }
@@ -139,12 +139,12 @@ namespace _06_CRUD
         {
             if (File.Exists(nomeArquivoOrigem) == false)
             {
-                MessageBox.Show("Atenção! \nNão foi possível encontrar a foto", "Cadastro de Pessoas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Atenção! \nNão foi possível encontrar a foto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
             if (File.Exists(nomeArquivoDestino) == true)
             {
-                if (MessageBox.Show("Atenção! \nJá existe foto com esse nome, deseja substituir a foto?", "Cadastro de Pessoas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show("Atenção! \nJá existe foto com esse nome, deseja substituir a foto?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     return false;
             }
             try
@@ -167,12 +167,12 @@ namespace _06_CRUD
                 }
                 f1.Close();
                 f2.Close();
-                MessageBox.Show("Foto salva!", "Cadastro de Pessoas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Foto salva!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao salvar a foto", "Cadastro de Pessoas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Erro ao salvar a foto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }
@@ -181,7 +181,7 @@ namespace _06_CRUD
         {
             OpenFileDialog AbreFoto = new OpenFileDialog();
             AbreFoto.Title = "Selecione uma foto";
-            AbreFoto.Filter = "All files (*.*)|*-*";
+            AbreFoto.Filter = "All files (*.*)|*.*";
             DialogResult dr = AbreFoto.ShowDialog();
             if (dr == DialogResult.OK)
             {
@@ -192,21 +192,21 @@ namespace _06_CRUD
                 }
                 catch (Exception)
                 {
+
                     MessageBox.Show("Erro ao carregar a foto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    
                 }
             }
         }
 
-        private void dgvBusca_Click(object sender, EventArgs e)
+        private void dgvPessoas_Click(object sender, EventArgs e)
         {
             toolStripSalvar.Enabled = false;
             toolStripAlterar.Enabled = true;
             toolStripExcluir.Enabled = true;
             toolStripCancelar.Visible = true;
             btnFoto.Enabled = false;
-            picFoto.Enabled = false;
-            dgvBusca.DefaultCellStyle.SelectionBackColor = Color.Tomato;
+            picFoto.Enabled = true;
+            dgvPessoas.DefaultCellStyle.SelectionBackColor = Color.Tomato;
             try
             {
                 MostraPessoa();
@@ -216,26 +216,28 @@ namespace _06_CRUD
 
                 MessageBox.Show("Erro ao carregar a foto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
         }
 
         private void MostraPessoa()
         {
-
             try
             {
-                txbId.Text = dgvBusca.SelectedRows[0].Cells[0].Value.ToString();
-                txbNome.Text = dgvBusca.SelectedRows[0].Cells[1].Value.ToString();
-                txbEmail.Text = dgvBusca.SelectedRows[0].Cells[2].Value.ToString();
-                mskFone.Text = dgvBusca.SelectedRows[0].Cells[3].Value.ToString();
-                dtpNascimento.Text = dgvBusca.SelectedRows[0].Cells[4].Value.ToString();
-                cbbSexo.Text = dgvBusca.SelectedRows[0].Cells[5].Value.ToString();
-                txbFoto.Text = dgvBusca.SelectedRows[0].Cells[6].Value.ToString();
-                picFoto.Image = null;
-                picFoto.Load(dgvBusca.SelectedRows[0].Cells[6].Value.ToString());
+                if (dgvPessoas.SelectedRows.Count > 0)
+                {
+                    txbId.Text = dgvPessoas.SelectedRows[0].Cells[0].Value.ToString();
+                    txbNome.Text = dgvPessoas.SelectedRows[0].Cells[1].Value.ToString();
+                    txbEmail.Text = dgvPessoas.SelectedRows[0].Cells[2].Value.ToString();
+                    mskFone.Text = dgvPessoas.SelectedRows[0].Cells[3].Value.ToString();
+                    dtpNascimento.Text = dgvPessoas.SelectedRows[0].Cells[4].Value.ToString();
+                    cbbSexo.Text = dgvPessoas.SelectedRows[0].Cells[5].Value.ToString();
+                    txbFoto.Text = dgvPessoas.SelectedRows[0].Cells[6].Value.ToString();
+                    picFoto.Image = null;
+                    picFoto.Load(dgvPessoas.SelectedRows[0].Cells[6].Value.ToString());
+                }
             }
             catch (Exception)
             {
+
                 throw;
             }
         }
@@ -246,36 +248,34 @@ namespace _06_CRUD
             toolStripSalvar.Enabled = true;
             toolStripAlterar.Enabled = false;
             toolStripExcluir.Enabled = false;
-            toolStripCancelar.Enabled = false;
-            btnFoto.Enabled = true;
-            txbFoto.Enabled = true;
+            toolStripCancelar.Visible = false;
+            picFoto.Enabled = false;
             txbNome.Focus();
-            dgvBusca.DefaultCellStyle.SelectionBackColor = Color.CornflowerBlue;
+            dgvPessoas.DefaultCellStyle.SelectionBackColor = Color.CornflowerBlue;
         }
 
         private void toolStripAlterar_Click(object sender, EventArgs e)
         {
             if (ValidaDados())
             {
-                string DataBanco = dtpNascimento.Value.ToString("yyyy/MM/DD");
+                string DataBanco = dtpNascimento.Value.ToString("yyyy/MM/dd");
                 Pessoa Atualiza = new Pessoa(int.Parse(txbId.Text), txbNome.Text, txbEmail.Text, mskFone.Text, DataBanco, cbbSexo.SelectedItem.ToString());
                 Atualiza.AlteraPessoa();
-                LimpaDados();
                 toolStripCancelar.PerformClick();
-                dgvBusca.DataSource = Pessoa.BuscaTodasPessoas();
+                dgvPessoas.DataSource = Pessoa.BuscaTodasPessoas();
                 txbNome.Focus();
             }
         }
 
         private void toolStripExcluir_Click(object sender, EventArgs e)
         {
-            DialogResult Pergunta = MessageBox.Show("Deseja excluir essa pessoa?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult Pergunta = MessageBox.Show("Deseja excluir esta pessoa?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (Pergunta == DialogResult.Yes)
             {
                 Pessoa Desativa = new Pessoa(int.Parse(txbId.Text));
                 Desativa.DesativaPessoa();
                 toolStripCancelar.PerformClick();
-                dgvBusca.DataSource = Pessoa.BuscaTodasPessoas();
+                dgvPessoas.DataSource = Pessoa.BuscaTodasPessoas();
                 txbNome.Focus();
             }
         }
@@ -290,12 +290,12 @@ namespace _06_CRUD
                 txbEmail.Enabled = false;
                 mskFone.Enabled = false;
                 dtpNascimento.Enabled = false;
-                cbbBusca.Enabled = false;
+                cbbSexo.Enabled = false;
                 toolStripAlterar.Enabled = false;
                 toolStripMudaFoto.Visible = true;
                 toolStripSalvar.Enabled = false;
                 toolStripCancelar.Visible = true;
-                toolStripExcluir.Visible = false;
+                toolStripExcluir.Enabled = false;
             }
             else
             {
@@ -313,7 +313,7 @@ namespace _06_CRUD
             Pessoa MudaFoto = new Pessoa(int.Parse(txbId.Text), Path.GetFileName(txbFoto.Text));
             MudaFoto.AlteraFoto();
             toolStripCancelar.PerformClick();
-            dgvBusca.DataSource = Pessoa.BuscaTodasPessoas();
+            dgvPessoas.DataSource = Pessoa.BuscaTodasPessoas();
             txbNome.Enabled = true;
             txbEmail.Enabled = true;
             mskFone.Enabled = true;
@@ -330,7 +330,7 @@ namespace _06_CRUD
 
         private void cbbBusca_DropDownClosed(object sender, EventArgs e)
         {
-            if (cbbBusca.SelectedIndex == 0 || cbbBusca.SelectedIndex == 6)
+            if (cbbBusca.SelectedIndex == 0 || cbbBusca.SelectedIndex == 5)
             {
                 txbBusca.Clear();
                 txbBusca.Enabled = false;
@@ -345,35 +345,51 @@ namespace _06_CRUD
 
         private void btnBusca_Click(object sender, EventArgs e)
         {
-            if (cbbBusca.SelectedIndex == 0)
+            try
             {
-                dgvBusca.DataSource = Pessoa.BuscaTodasPessoas();
+                if (cbbBusca.SelectedIndex == 0)
+                {
+                    dgvPessoas.DataSource = Pessoa.BuscaTodasPessoas();
+                }
+                if (cbbBusca.SelectedIndex == 1)
+                {
+                    dgvPessoas.DataSource = Pessoa.BuscarPorId(int.Parse(txbBusca.Text));
+                }
+                if (cbbBusca.SelectedIndex == 2)
+                {
+                    dgvPessoas.DataSource = Pessoa.BuscarPorNome(txbBusca.Text);
+                }
+                if (cbbBusca.SelectedIndex == 3)
+                {
+                    dgvPessoas.DataSource = Pessoa.BuscarPorEmail(txbBusca.Text);
+                }
+                if (cbbBusca.SelectedIndex == 4)
+                {
+                    dgvPessoas.DataSource = Pessoa.BuscarPorFone(txbBusca.Text);
+                }
+                if (cbbBusca.SelectedIndex == 5)
+                {
+                    dgvPessoas.DataSource = Pessoa.BuscarPorAtivo(0);
+                }
             }
-            if (cbbBusca.SelectedIndex == 1)
+            catch (Exception)
             {
-                dgvBusca.DataSource = Pessoa.BuscaPorId(int.Parse(txbBusca.Text));
-            }
-            if (cbbBusca.SelectedIndex == 2)
-            {
-                dgvBusca.DataSource = Pessoa.BuscaPorNome(txbBusca.Text);
-            }
-            if (cbbBusca.SelectedIndex == 3)
-            {
-                dgvBusca.DataSource = Pessoa.BuscaPorEmail(txbBusca.Text);
-            }
-            if (cbbBusca.SelectedIndex == 4)
-            {
-                dgvBusca.DataSource = Pessoa.BuscaPorFone(txbBusca.Text);
-            }
-            if (cbbBusca.SelectedIndex == 5)
-            {
-                dgvBusca.DataSource = Pessoa.BuscaPorId(int.Parse(txbBusca.Text));
-            }
-            if (cbbBusca.SelectedIndex == 6)
-            {
-                dgvBusca.DataSource = Pessoa.BuscaDesativado();
-            }
 
+               
+            }
+            
+        }
+
+        private void toolStripAlterarSenha_Click(object sender, EventArgs e)
+        {
+            frmSenha TS = new frmSenha(usuarioLogado);
+            TS.ShowDialog();
+        }
+
+        private void toolStripUsuarios_Click(object sender, EventArgs e)
+        {
+            frmUsuario TU = new frmUsuario(usuarioLogado);
+            TU.ShowDialog();
         }
     }
 }

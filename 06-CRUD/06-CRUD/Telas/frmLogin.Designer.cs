@@ -29,7 +29,6 @@ namespace _06_CRUD
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txbLogin = new System.Windows.Forms.TextBox();
@@ -42,17 +41,17 @@ namespace _06_CRUD
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(29, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(242, 31);
+            this.label1.Size = new System.Drawing.Size(194, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Acesso ao sistema";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 79);
+            this.label2.Location = new System.Drawing.Point(28, 67);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 1;
@@ -60,26 +59,27 @@ namespace _06_CRUD
             // 
             // txbLogin
             // 
-            this.txbLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbLogin.Location = new System.Drawing.Point(15, 95);
+            this.txbLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbLogin.Location = new System.Drawing.Point(31, 83);
             this.txbLogin.Name = "txbLogin";
-            this.txbLogin.Size = new System.Drawing.Size(239, 23);
+            this.txbLogin.Size = new System.Drawing.Size(190, 30);
             this.txbLogin.TabIndex = 2;
+            this.txbLogin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbLogin_KeyPress);
             // 
             // txbSenha
             // 
-            this.txbSenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbSenha.Location = new System.Drawing.Point(15, 149);
+            this.txbSenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbSenha.Location = new System.Drawing.Point(31, 141);
             this.txbSenha.Name = "txbSenha";
             this.txbSenha.PasswordChar = '*';
-            this.txbSenha.Size = new System.Drawing.Size(239, 23);
+            this.txbSenha.Size = new System.Drawing.Size(190, 30);
             this.txbSenha.TabIndex = 4;
             this.txbSenha.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbSenha_KeyPress);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 133);
+            this.label3.Location = new System.Drawing.Point(28, 125);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 13);
             this.label3.TabIndex = 3;
@@ -87,9 +87,9 @@ namespace _06_CRUD
             // 
             // btnEntrar
             // 
-            this.btnEntrar.Location = new System.Drawing.Point(18, 187);
+            this.btnEntrar.Location = new System.Drawing.Point(31, 193);
             this.btnEntrar.Name = "btnEntrar";
-            this.btnEntrar.Size = new System.Drawing.Size(95, 40);
+            this.btnEntrar.Size = new System.Drawing.Size(90, 36);
             this.btnEntrar.TabIndex = 5;
             this.btnEntrar.Text = "Entrar";
             this.btnEntrar.UseVisualStyleBackColor = true;
@@ -97,9 +97,9 @@ namespace _06_CRUD
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(159, 187);
+            this.btnSair.Location = new System.Drawing.Point(131, 193);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(95, 40);
+            this.btnSair.Size = new System.Drawing.Size(90, 36);
             this.btnSair.TabIndex = 6;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
@@ -109,7 +109,7 @@ namespace _06_CRUD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(268, 239);
+            this.ClientSize = new System.Drawing.Size(260, 247);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnEntrar);
             this.Controls.Add(this.txbSenha);
@@ -117,13 +117,11 @@ namespace _06_CRUD
             this.Controls.Add(this.txbLogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Acesso ao sistema";
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbSenha_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -20,16 +20,16 @@ namespace _06_CRUD
 
         private Boolean VerificaCampos()
         {
-            if (txbLogin.Text == String.Empty)
+            if (txbLogin.Text == string.Empty)
             {
-                MessageBox.Show("Campo orbigatorio", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Campo obrigatório", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txbLogin.Focus();
                 return false;
             }
 
-            if (txbSenha.Text == String.Empty)
+            if (txbSenha.Text == string.Empty)
             {
-                MessageBox.Show("Campo orbigatorio", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Campo obrigatório", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txbSenha.Focus();
                 return false;
             }
@@ -60,6 +60,17 @@ namespace _06_CRUD
         private void btnSair_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void txbLogin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                if (VerificaCampos())
+                {
+                    btnEntrar.PerformClick();
+                }
+            }
         }
 
         private void txbSenha_KeyPress(object sender, KeyPressEventArgs e)

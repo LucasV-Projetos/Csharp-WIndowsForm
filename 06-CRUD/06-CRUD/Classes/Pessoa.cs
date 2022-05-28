@@ -12,6 +12,7 @@ namespace _06_CRUD.Classes
     public class Pessoa
     {
         #region "Variáveis"
+
         private int _id_pessoa;
         private string _nome;
         private string _email;
@@ -20,10 +21,12 @@ namespace _06_CRUD.Classes
         private string _sexo;
         private string _foto;
         private int _ativo;
+
         #endregion
 
 
         #region "Propriedades"
+
         public int Id_pessoa
         {
             get { return _id_pessoa; }
@@ -71,12 +74,14 @@ namespace _06_CRUD.Classes
             get { return _ativo; }
             set { _ativo = value; }
         }
+
         #endregion
 
 
         #region "Construtores"
-        public Pessoa()
+
         //Construtor padrão
+        public Pessoa()
         {
             Id_pessoa = 0;
             Nome = string.Empty;
@@ -87,11 +92,12 @@ namespace _06_CRUD.Classes
             Foto = string.Empty;
             Ativo = 0;
         }
-        #endregion
 
-        public Pessoa(string nome, string email, string fone, string dtnasc, string sexo, string foto, int ativo)
+        //Construtor para inserir uma pessoa
+        public Pessoa(string nome, string email, string fone, 
+                      string dtnasc, string sexo, string foto, 
+                      int ativo)
         {
-            //Construtor para adicionar uma pessoa
             Nome = nome;
             Email = email;
             Fone = fone;
@@ -101,10 +107,11 @@ namespace _06_CRUD.Classes
             Ativo = ativo;
         }
 
-        public Pessoa(int id_pessoa, string nome, string email, string fone, string dtnasc, string sexo)
+        //Construtor para alterar uma pessoa
+        public Pessoa(int id_pessoa, string nome, string email, 
+                      string fone, string dtnasc, string sexo)
         {
-            //Construtor para alterar uma pessoa
-            Id_pessoa = Id_pessoa;
+            Id_pessoa = id_pessoa;
             Nome = nome;
             Email = email;
             Fone = fone;
@@ -112,40 +119,52 @@ namespace _06_CRUD.Classes
             Sexo = sexo;
         }
 
+        //Construtor para ativar/desativar uma pessoa
         public Pessoa(int id_pessoa, int ativo)
         {
-            //Construtor para ativar/desativar uma pessoa
-            Id_pessoa = Id_pessoa;
+            Id_pessoa = id_pessoa;
             Ativo = ativo;
         }
 
+        //Construtor para alterar a foto de uma pessoa
         public Pessoa(int id_pessoa, string foto)
         {
-            //Construtor para alterar a foto de uma pessoa
-            Id_pessoa = Id_pessoa;
+            Id_pessoa = id_pessoa;
             Foto = foto;
         }
 
-
+        //Construtor para buscar uma pessoa
         public Pessoa(int id_pessoa)
         {
-            //Construtor para buscar uma pessoa
-            Id_pessoa = Id_pessoa;
+            Id_pessoa = id_pessoa;
         }
+
+        #endregion
+
 
         #region "Métodos"
 
         //Método para inserir uma pessoa
-        public void CadastraPessoa()
+        public int CadastraPessoa()
         {
             Conexao cn = new Conexao();
             try
             {
-                cn.query = String.Format("INSERT INTO tab_pessoas (nome, email, fone, dtnasc, sexo, foto, ativo) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6})", Nome, Email, Fone, Dtnasc, Sexo, Foto, Ativo);
+                cn.query = String.Format("INSERT INTO tab_pessoas (nome, email, fone, " +
+                    "dtnasc, sexo, foto, ativo) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', " +
+                    "'{5}', {6}); SELECT SCOPE_IDENTITY()", Nome, Email, Fone, Dtnasc, Sexo, Foto, Ativo);
                 cn.comando = new SqlCommand(cn.query, cn.conexao);
                 cn.AbreConexao();
-                cn.comando.ExecuteNonQuery();
-                MessageBox.Show("Pessoa inserida com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                //cn.comando.ExecuteNonQuery();
+                cn.dr = cn.comando.ExecuteReader();
+                if (cn.dr.HasRows)
+                {
+                    while (cn.dr.Read())
+                    {
+                        return Convert.ToInt32(cn.dr[0]);
+                    }
+                }
+                return 0;
             }
             catch (Exception)
             {
@@ -156,7 +175,6 @@ namespace _06_CRUD.Classes
             {
                 cn.FechaConexao();
             }
-            #endregion
         }
 
         //Método para alterar uma pessoa
@@ -165,7 +183,8 @@ namespace _06_CRUD.Classes
             Conexao cn = new Conexao();
             try
             {
-                cn.query = String.Format("UPDATE tab_pessoas SET nome = '{0}', email = '{1}', fone = '{2}', dtnasc = '{3}', sexo = '{4}' WHERE id_pessoa = '{5}'", Nome, Email, Fone, Dtnasc, Sexo, Id_pessoa);
+                cn.query = String.Format("UPDATE tab_pessoas SET nome = '{0}', email = '{1}', fone = '{2}', " +
+                    "dtnasc = '{3}', sexo = '{4}' WHERE id_pessoa = {5}", Nome, Email, Fone, Dtnasc, Sexo, Id_pessoa);
                 cn.comando = new SqlCommand(cn.query, cn.conexao);
                 cn.AbreConexao();
                 cn.comando.ExecuteNonQuery();
@@ -182,13 +201,13 @@ namespace _06_CRUD.Classes
             }
         }
 
-        //Método para alterar a foto
+        //Método para alterar a foto de uma pessoa
         public void AlteraFoto()
         {
             Conexao cn = new Conexao();
             try
             {
-                cn.query = String.Format("UPDATE tab_pessoas SET foto = '{0}' WHERE id_pessoa = '{1}'", Foto, Id_pessoa);
+                cn.query = String.Format("UPDATE tab_pessoas SET foto = '{0}' WHERE id_pessoa = {1}", Foto, Id_pessoa);
                 cn.comando = new SqlCommand(cn.query, cn.conexao);
                 cn.AbreConexao();
                 cn.comando.ExecuteNonQuery();
@@ -202,7 +221,7 @@ namespace _06_CRUD.Classes
             finally
             {
                 cn.FechaConexao();
-            }            
+            }
         }
 
         //Método para ativar uma pessoa
@@ -211,7 +230,7 @@ namespace _06_CRUD.Classes
             Conexao cn = new Conexao();
             try
             {
-                cn.query = String.Format("UPDATE tab_pessoas SET ativo = 1 WHERE id_pessoa = '{0}'", Id_pessoa);
+                cn.query = String.Format("UPDATE tab_pessoas SET ativo = 1 WHERE id_pessoa = {0}", Id_pessoa);
                 cn.comando = new SqlCommand(cn.query, cn.conexao);
                 cn.AbreConexao();
                 cn.comando.ExecuteNonQuery();
@@ -228,13 +247,14 @@ namespace _06_CRUD.Classes
             }
         }
 
+
         //Método para desativar uma pessoa
         public void DesativaPessoa()
         {
             Conexao cn = new Conexao();
             try
             {
-                cn.query = String.Format("UPDATE tab_pessoas SET ativo = 0 WHERE id_pessoa = '{0}'", Id_pessoa);
+                cn.query = String.Format("UPDATE tab_pessoas SET ativo = 0 WHERE id_pessoa = {0}", Id_pessoa);
                 cn.comando = new SqlCommand(cn.query, cn.conexao);
                 cn.AbreConexao();
                 cn.comando.ExecuteNonQuery();
@@ -261,18 +281,18 @@ namespace _06_CRUD.Classes
                 cn.da = new SqlDataAdapter(cn.query, cn.conexao);
                 cn.ds = new DataSet();
                 cn.da.Fill(cn.ds, "Pessoas");
-                return cn.ds.Tables["pessoas"];
+                return cn.ds.Tables["Pessoas"];
             }
             catch (Exception)
             {
+
                 throw;
             }
         }
 
 
-
         //Método para buscar pelo nome
-        public static dynamic BuscaPorNome(string nome)
+        public static dynamic BuscarPorNome(string nome)
         {
             Conexao cn = new Conexao();
             try
@@ -292,7 +312,7 @@ namespace _06_CRUD.Classes
 
 
         //Método para buscar por Id
-        public static dynamic BuscaPorId(int id)
+        public static dynamic BuscarPorId(int id)
         {
             Conexao cn = new Conexao();
             try
@@ -312,7 +332,7 @@ namespace _06_CRUD.Classes
 
 
         //Método para buscar pelo email
-        public static dynamic BuscaPorEmail(string email)
+        public static dynamic BuscarPorEmail(string email)
         {
             Conexao cn = new Conexao();
             try
@@ -332,7 +352,7 @@ namespace _06_CRUD.Classes
 
 
         //Método para buscar pelo fone
-        public static dynamic BuscaPorFone(string fone)
+        public static dynamic BuscarPorFone(string fone)
         {
             Conexao cn = new Conexao();
             try
@@ -352,12 +372,12 @@ namespace _06_CRUD.Classes
 
 
         //Método para buscar por ativo
-        public static dynamic BuscaPorAtivo()
+        public static dynamic BuscarPorAtivo(int ativo)
         {
             Conexao cn = new Conexao();
             try
             {
-                cn.query = "SELECT * FROM tab_pessoas WHERE ativo = 0";
+                cn.query = "SELECT * FROM tab_pessoas WHERE ativo = " + ativo;
                 cn.da = new SqlDataAdapter(cn.query, cn.conexao);
                 cn.ds = new DataSet();
                 cn.da.Fill(cn.ds, "Pessoas");
@@ -370,25 +390,9 @@ namespace _06_CRUD.Classes
             }
         }
 
-        //Método para buscar todas as pessoas desativadas
-        public static dynamic BuscaDesativado()
-        {
-            Conexao cn = new Conexao();
-            try
-            {
-                cn.query = "SELECT * FROM tab_pessoas WHERE ativo = 0";
-                cn.da = new SqlDataAdapter(cn.query, cn.conexao);
-                cn.ds = new DataSet();
-                cn.da.Fill(cn.ds, "Pessoas");
-                return cn.ds.Tables["pessoas"];
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        //Método para mostrar todas as ativas no Combobox
-        public static dynamic CarregaComboBox()
+
+        //Método para mostrar todas as pessoas ativas no Combobox
+        public static dynamic CarregaCombobox()
         {
             Conexao cn = new Conexao();
             try
@@ -397,13 +401,15 @@ namespace _06_CRUD.Classes
                 cn.da = new SqlDataAdapter(cn.query, cn.conexao);
                 cn.ds = new DataSet();
                 cn.da.Fill(cn.ds, "Pessoas");
-                return cn.ds.Tables["pessoas"];
+                return cn.ds.Tables["Pessoas"];
             }
             catch (Exception)
             {
+
                 throw;
             }
         }
 
+        #endregion
     }
 }

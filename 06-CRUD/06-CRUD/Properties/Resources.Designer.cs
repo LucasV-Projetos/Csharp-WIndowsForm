@@ -63,9 +63,9 @@ namespace _06_CRUD.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cancel_64 {
+        internal static System.Drawing.Bitmap cancel_32 {
             get {
-                object obj = ResourceManager.GetObject("cancel-64", resourceCulture);
+                object obj = ResourceManager.GetObject("cancel-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace _06_CRUD.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap delete_64 {
+        internal static System.Drawing.Bitmap delete_32 {
             get {
-                object obj = ResourceManager.GetObject("delete-64", resourceCulture);
+                object obj = ResourceManager.GetObject("delete-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace _06_CRUD.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap exit_64 {
+        internal static System.Drawing.Bitmap exit_32 {
             get {
-                object obj = ResourceManager.GetObject("exit-64", resourceCulture);
+                object obj = ResourceManager.GetObject("exit-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace _06_CRUD.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap login_80 {
+        internal static System.Drawing.Bitmap login_32 {
             get {
-                object obj = ResourceManager.GetObject("login-80", resourceCulture);
+                object obj = ResourceManager.GetObject("login-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace _06_CRUD.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save_64 {
+        internal static System.Drawing.Bitmap save_32 {
             get {
-                object obj = ResourceManager.GetObject("save-64", resourceCulture);
+                object obj = ResourceManager.GetObject("save-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace _06_CRUD.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap update_64 {
+        internal static System.Drawing.Bitmap update_32 {
             get {
-                object obj = ResourceManager.GetObject("update-64", resourceCulture);
+                object obj = ResourceManager.GetObject("update-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
