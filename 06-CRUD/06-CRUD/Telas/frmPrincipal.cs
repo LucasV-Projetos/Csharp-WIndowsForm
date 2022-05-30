@@ -204,7 +204,7 @@ namespace _06_CRUD.Telas
             toolStripAlterar.Enabled = true;
             toolStripExcluir.Enabled = true;
             toolStripCancelar.Visible = true;
-            btnFoto.Enabled = false;
+            btnFoto.Enabled = true;
             picFoto.Enabled = true;
             dgvPessoas.DefaultCellStyle.SelectionBackColor = Color.Tomato;
             try
