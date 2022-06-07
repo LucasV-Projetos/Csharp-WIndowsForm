@@ -526,7 +526,7 @@ namespace _01_AulaCsharp
             this.btnOla.Name = "btnOla";
             this.btnOla.Size = new System.Drawing.Size(148, 50);
             this.btnOla.TabIndex = 1;
-            this.btnOla.Text = "Ola";
+            this.btnOla.Text = "Olá";
             this.btnOla.UseVisualStyleBackColor = true;
             this.btnOla.Click += new System.EventHandler(this.btnOla_Click);
             // 

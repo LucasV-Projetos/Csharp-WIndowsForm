@@ -131,7 +131,7 @@ namespace _01_AulaCsharp
 
         private void btnOla_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Ola usuario, seja bem vindo!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Olá usuário, seja bem vindo!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void label1_Click(object sender, EventArgs e)
